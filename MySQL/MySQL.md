@@ -67,5 +67,12 @@ mysql> show tables;
    多行注释：/*注释文字*/
 ```
 
+##### 术语
 
+```
+DQL:Data Query Languge 数据查询语言
+DML:Data Manage Languge
+DDL:Data Define Languge
+TCL:Transation Control Languge 事务控制语言
+```
 
