@@ -12,7 +12,7 @@
 
 ```python
 # 定义求两个数之和的函数
-def sum(a,d):
+def sum(a,b):
     return a+b
 ```
 
@@ -59,17 +59,110 @@ print(sum(1,2,3))
 
 2：实现程序模块化
 
-关键字：`module`，`import`
+关键字：`import`，`from`，`as`
 
 ##### 使用场景
 
+###### 导入模块
+
+>第一种：适用于从某个模块中引入单个函数 （关键字`from [模块名] import [函数]`）
+>
+>```python
+>from module1 import sum
+>```
+>
+>第二种：将整个模块引入，可使用模块中的所有函数（关键字`import[模块名]as[别名]`）
+>
+>```python
+>import module1 as module
+>```
+
+###### 可执行代码处理
+
+>在导入其他模块时，除了定义函数外还有可执行的代码，那么python解释器在导入模块时会触发执行，实际应用中，我们可能不希望这样，因此我们在模块中编写可执行代码时，最好将这些可执行代码放入条件语句中，当条件满足时在执行
+>
+>`module1.py`
+>
+>```python
+>def sum(a,b):
+>    return a+b
+>print('我是可执行代码')
+>```
+>
+>`module2.py`
+>
+>```python
+>import module1 as m1
+>m1.sum(1,3)
+>
+># 此时除了会执行sum求和，同时会打印语句
+>```
+>
+>修改后的`module1.py`
+>
+>```python
+>def sum(a,b):
+>    retun a+b
+>if __name__='__main__':
+>    print('我是可执行代码')
+># __name__ 是python中一个隐含的变量，它代表模块的名字
+># __main__ 是被pyhton解释器直接执行的模块名称
+>```
+>
+>`module2.py`
+>
+>```python
+>import module1 as m1
+>m1.sum(1,3)
+>
+># 此时仅会执行sum求和，因为此时模块的名字为module1而不是__main__
+>```
+
+###### 示例
+
 在module1和mdule2中分别定义sum函数，在test中调用
 
+`module1.py`
+
 ```python
+def sum(a,b):
+    return a+b
+```
+
+`module2.py`
+
+```python
+def sum(a,b):
+    return a+b
+```
+
+`test.py`
+
+```python
+# 第一种方式导入
+from module1 import sum
+sum(1,3)
+from module2 import sum
+sum(3,4)
+
+# 第二种方式导入
+import module1 as m1
+import module as m2
+
+m1.sum(1,3)
+m2.sum(3,4)
 
 ```
 
+###### 注意
 
+```python
+from module1 import sum
+from module2 import sum
+sum(1,2)
+
+# 如果多个模块中有相同名称的函数，在导入时 后面的会覆盖前面的模块，因此日常推荐使用第二种方式的导入模块
+```
 
 
 
